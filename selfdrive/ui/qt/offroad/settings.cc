@@ -65,6 +65,12 @@ TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
       "../assets/offroad/icon_monitoring.png",
     },
     {
+      "StealthMode",
+      tr("Stealth Mode"),
+      tr("Stealth mode, making the device appear switched off."),
+      "../assets/img_experimental_white.svg",
+    },
+    {
       "IsMetric",
       tr("Use Metric System"),
       tr("Display speed in km/h instead of mph."),
@@ -98,6 +104,12 @@ TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
       addItem(long_personality_setting);
     }
   }
+
+  // Connect the StealthMode toggle's flipped signal to a custom handler
+  connect(toggles["StealthMode"], &ToggleControl::toggleFlipped, [=]() {
+    qApp->exit(18);
+    watchdog_kick(0);
+  });
 
   // Toggles with confirmation dialogs
   toggles["ExperimentalMode"]->setActiveIcon("../assets/img_experimental.svg");

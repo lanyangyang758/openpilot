@@ -20,6 +20,15 @@ OnroadWindow::OnroadWindow(QWidget *parent) : QWidget(parent) {
   split->setSpacing(0);
   split->addWidget(nvg);
 
+  if(params.getBool("StealthMode")) {
+    QWidget *black_widget = new QWidget;
+    black_widget->setStyleSheet("background-color: black;");
+    main_layout->setMargin(0);
+    main_layout->setContentsMargins(0, 0, 0, 25);
+    split->addWidget(black_widget);
+    nvg->hide();
+  }
+
   if (getenv("DUAL_CAMERA_VIEW")) {
     CameraWidget *arCam = new CameraWidget("camerad", VISION_STREAM_ROAD, this);
     split->insertWidget(0, arCam);
